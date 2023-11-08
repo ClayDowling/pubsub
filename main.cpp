@@ -18,18 +18,18 @@ public:
     {
         handlers.emplace_back(h);
     }
-    
+
     void publish(M msg)
     {
         for (auto h : handlers)
         {
-            jthread hdlr([msg, this]()
+            jthread hdlr([msg, h]()
                          { h(msg); });
         };
     }
 
 private:
-    vector<std::function<void(M)>> handlers;
+    vector<std::function<void(M)>> handlers;    
 };
 
 struct typeA
